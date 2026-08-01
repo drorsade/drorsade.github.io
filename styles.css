@@ -156,24 +156,16 @@ p:last-child { margin-bottom: 0; }
     0 14px 34px -14px rgba(88, 79, 76, .40);
 }
 
-/* both faces occupy the same box; only the active one is opaque */
-.card {
-  position: relative;
-  aspect-ratio: 700 / 986;    /* every card scan shares these proportions */
-}
+/* The card in the markup stays in normal flow and defines the height —
+   even at opacity 0 — so the box never collapses mid-crossfade. The second
+   layer is created and positioned by script.js. */
+.card { position: relative; }
 
-.card__face {
-  position: absolute;
-  inset: 0;
+.card img {
   width: 100%;
-  height: 100%;
+  height: auto;
   display: block;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity .5s ease;
 }
-
-.card__face.is-active { opacity: 1; }
 
 .btn-draw {
   display: inline-block;

@@ -48,11 +48,37 @@ const drawBtn = document.getElementById("draw");
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-let front = document.getElementById("card-a");   // הקלף שמוצג כרגע
-let back  = document.getElementById("card-b");   // השכבה שמתחתיו, שאליה נטען הבא
+const cardEl  = document.getElementById("card");
+const baseImg = document.getElementById("card-img");
+
+/* שכבת הקלף השנייה נוצרת כאן ולא ב-HTML, והמיקום שלה נקבע בסגנון ישיר.
+   כך אי אפשר להגיע למצב שבו התמונה השנייה מוצגת בלי העיצוב שלה. */
+const overlay = document.createElement("img");
+overlay.alt = "";
+overlay.setAttribute("aria-hidden", "true");
+Object.assign(overlay.style, {
+  position: "absolute",
+  inset: "0",
+  width: "100%",
+  height: "100%",
+  objectFit: "cover",
+  opacity: "0"
+});
+
+let front = baseImg;    // הקלף שמוצג כרגע
+let back  = overlay;    // השכבה שאליה נטען הקלף הבא
 
 let current = 0;
 let busy    = false;
+
+if (cardEl && baseImg) {
+  cardEl.style.position = "relative";
+  cardEl.appendChild(overlay);
+  if (!reduceMotion) {
+    baseImg.style.transition = "opacity .5s ease";
+    overlay.style.transition = "opacity .5s ease";
+  }
+}
 
 /* טוענים מראש את כל הקלפים, כדי שהמעבר ביניהם יהיה מיידי וללא הבהוב */
 CARDS.forEach(c => { const pre = new Image(); pre.src = c.img; });
@@ -77,8 +103,8 @@ async function drawCard() {
   front.setAttribute("aria-hidden", "true");
   back.removeAttribute("aria-hidden");
 
-  back.classList.add("is-active");
-  front.classList.remove("is-active");
+  back.style.opacity  = "1";
+  front.style.opacity = "0";
 
   [front, back] = [back, front];  // מחליפים תפקידים
   busy = false;

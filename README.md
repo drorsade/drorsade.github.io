@@ -60,6 +60,17 @@ ffmpeg -i clip.MP4 -vf "scale=-2:720" -c:v libx264 -profile:v high -pix_fmt yuv4
   -crf 28 -movflags +faststart -c:a aac -b:a 96k assets/new-video.mp4
 ```
 
+## Cache busting
+
+CSS and JS are linked with a version query — `styles.css?v=2`. There is no build
+step here, so browsers will happily serve a stale stylesheet against new HTML,
+which has broken the layout more than once. **After editing `styles.css`,
+`script.js` or `contact.js`, bump the number in every HTML file:**
+
+```bash
+sed -i '' 's/?v=2/?v=3/g' *.html
+```
+
 ## Deploying
 
 Hosted on GitHub Pages from the `main` branch, root folder.
