@@ -60,6 +60,28 @@ ffmpeg -i clip.MP4 -vf "scale=-2:720" -c:v libx264 -profile:v high -pix_fmt yuv4
   -crf 28 -movflags +faststart -c:a aac -b:a 96k assets/new-video.mp4
 ```
 
+## Analytics
+
+GitHub Pages provides **no** analytics. (The repo's Insights → Traffic tab counts
+visits to the *repository page*, not to the site.)
+
+`analytics.js` is wired into every page but stays completely inert — it makes no
+network request — until a token is set:
+
+1. Sign up free at <https://dash.cloudflare.com> (the domain does **not** need to
+   be hosted on Cloudflare)
+2. **Analytics & Logs → Web Analytics → Add a site**, enter `drorsade.github.io`
+3. Copy the token out of the snippet Cloudflare shows
+4. Paste it into `CF_ANALYTICS_TOKEN` in `analytics.js`
+5. **Update section 3 of `privacy.html`** in the same change — it currently states
+   that the site runs no analytics, which stops being true the moment the token
+   is set
+
+Cloudflare Web Analytics is cookieless and collects no identifying data, so it
+needs no consent banner. It reports pageviews, referrers, countries and devices —
+but **not custom events**, so it cannot count buy-button clicks. If that number
+matters, Plausible (~$9/month) supports events and would replace this.
+
 ## Cache busting
 
 CSS and JS are linked with a version query — `styles.css?v=2`. There is no build
