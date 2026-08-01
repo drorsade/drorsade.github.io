@@ -67,11 +67,51 @@ Settings → Pages → Source: `main` / `/ (root)`. Pushing to `main` publishes.
 
 `.nojekyll` is present so GitHub serves the files as-is.
 
-## Before launch
+## TODO
 
-- [ ] Paste the Morning payment URL into `script.js`
-- [ ] Fill in the עוסק number and returns address in `takanon.html` (marked `[להשלמה]`)
-- [ ] Have a lawyer glance at `takanon.html` / `privacy.html` — they're solid templates,
-      not legal advice
-- [ ] Update `og:url` / `canonical` in `index.html` to the real domain
-- [ ] Check the page on a real iPhone
+### Blockers — the page can't take a real order until these are done
+
+- [ ] **Morning payment URL** → `MORNING_URL` in `script.js` (currently `""`).
+      Until it's set, every buy button opens a pre-filled WhatsApp order and payment
+      is handled manually.
+- [ ] **מספר עוסק** → `takanon.html`, section 1 (marked `[להשלמה]`)
+- [ ] **Returns address** → `takanon.html`, section 6 (marked `[להשלמה]`)
+
+### Legal
+
+- [ ] Lawyer to review `takanon.html` and `privacy.html`. They cover חוק הגנת הצרכן
+      and are a solid starting nusach, but they are templates, not legal advice.
+      `accessibility.html` is complete and matches what the site actually does.
+
+### Publishing
+
+- [ ] Re-enable GitHub Pages when ready (Settings → Pages → `main` / root)
+- [ ] While Pages is off, `canonical` and `og:image` in `index.html` point at a URL
+      that returns 404. Harmless offline, but they must be corrected before
+      republishing or sharing any link.
+- [ ] Custom domain — deferred. Needs A/AAAA records for the apex plus a `www`
+      CNAME to `netisade.github.io`, then `canonical` / `og:url` / `og:image` updated.
+
+### Verification not yet done
+
+- [ ] Open the page on a real iPhone. Hebrew rendering in mobile Safari is the one
+      thing desktop and headless testing can't confirm.
+- [ ] Test one full purchase end to end once the Morning link is live: click the
+      button, pay, confirm the invoice email arrives.
+
+### Optional / when the content exists
+
+- [ ] Testimonials section — deliberately omitted rather than faked. Say the word
+      once there are real quotes.
+- [ ] Courier orders (₪250 incl. ₪30 delivery) currently go through WhatsApp only.
+      Direct purchase would need a second Morning link and a second button.
+- [ ] Analytics (GA4 or Plausible) — roughly a 5-line addition, none present today.
+
+### Notes
+
+- The repo is **public**, which GitHub requires for Pages on a free account.
+  If it's made private, Pages stops publishing.
+- `.local-source/` holds two unused full-resolution card designs, gitignored so
+  they aren't published.
+- Commits are authored `netisade@gmail.com`, visible in the history while the repo
+  is public.
