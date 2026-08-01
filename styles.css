@@ -520,6 +520,10 @@ p:last-child { margin-bottom: 0; }
   width: .92em;
   height: .92em;
   flex: none;
+  /* geometric centring sits the icon high against the glyphs, because the
+     line box includes descender space the digits and caps don't use.
+     This nudge aligns it with the optical middle of the text. */
+  transform: translateY(.1em);
 }
 
 /* a solid glyph reads heavier than an outlined one at the same box size */
