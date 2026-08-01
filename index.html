@@ -78,25 +78,9 @@
 
       <!-- The signature element: a real card, drawable -->
       <div class="draw">
-        <div class="card" id="card">
-          <svg class="card__flock" viewBox="0 0 200 60" aria-hidden="true">
-            <g transform="translate(14 22) scale(.30)"><use href="#bird-fly"/></g>
-            <g transform="translate(56 8)  scale(.42)"><use href="#bird-fly"/></g>
-            <g transform="translate(108 24) scale(.24)"><use href="#bird-fly"/></g>
-            <g transform="translate(142 4)  scale(.50)"><use href="#bird-fly"/></g>
-          </svg>
-
-          <div class="card__body" aria-live="polite">
-            <h2 class="card__title" id="card-title">אני תומכת בי</h2>
-            <p class="card__text" id="card-text">יש לי גב, אני איתי,<br>אני המקור ליציבות ולביטחון שלי,<br>אני לא לבד — יש לי אותי.</p>
-          </div>
-
-          <svg class="card__wire" viewBox="0 0 200 24" aria-hidden="true">
-            <path d="M4 6 Q100 22 196 6" fill="none" stroke="currentColor" stroke-width="0.8"/>
-            <g transform="translate(60 4)  scale(.38)"><use href="#bird-sit"/></g>
-            <g transform="translate(69 6)  scale(.34)"><use href="#bird-sit"/></g>
-            <g transform="translate(132 8) scale(.36)"><use href="#bird-sit"/></g>
-          </svg>
+        <div class="card" id="card" aria-live="polite">
+          <img id="card-img" src="assets/card-tov-matok.jpg" width="700" height="986"
+               alt="קלף ובו הכיתוב: רק טוב מתוק מונח לפניי. ההווה והעתיד שלי מלאים ברכה ושפע. הכל מתכנס לטובתי העליונה ולהגשמת כל חלומותיי ורצונותיי בדרכים מושלמות.">
         </div>
 
         <button class="btn-draw" id="draw" type="button">

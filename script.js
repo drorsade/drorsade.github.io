@@ -19,60 +19,57 @@ if (MORNING_URL) {
 /* ------------------------------------------------------------
    2. הקלפים
    ------------------------------------------------------------
-   להוספת קלף: מוסיפים עוד { title, text } לרשימה.
-   בתוך text אפשר להשתמש ב-<br> כדי לשבור שורה.
+   להוספת קלף: שומרים את תמונת הקלף בתיקיית assets ומוסיפים כאן
+   שורה עם שם הקובץ ועם נוסח הקלף.
+
+   ה-alt הוא לא קישוט: הוא מה שקורא מסך מקריא, ומה שמופיע אם
+   התמונה לא נטענת. לכן הוא מכיל את הנוסח המלא של הקלף.
    ------------------------------------------------------------ */
-const PHRASES = [
+const CARDS = [
   {
-    title: "אני תומכת בי",
-    text: "יש לי גב, אני איתי,<br>אני המקור ליציבות ולביטחון שלי,<br>אני לא לבד — יש לי אותי."
+    img: "assets/card-tov-matok.jpg",
+    alt: "קלף ובו הכיתוב: רק טוב מתוק מונח לפניי. ההווה והעתיד שלי מלאים ברכה ושפע. הכל מתכנס לטובתי העליונה ולהגשמת כל חלומותיי ורצונותיי בדרכים מושלמות."
   },
   {
-    title: "החיים אוהבים אותי",
-    text: "היקום תומך בתהליכים שאני עוברת.<br>דברים קורים ומסתדרים<br>באופן מושלם בשבילי."
+    img: "assets/card-chaim-ohavim.jpg",
+    alt: "קלף ובו הכיתוב: החיים אוהבים אותי. היקום תומך בתהליכים שאני עוברת. דברים קורים ומסתדרים באופן מושלם בשבילי."
   },
   {
-    title: "אני בדרך הנכונה",
-    text: "גם אם לעיתים מרגיש שערפל כבד<br>מסתיר את שדה הראייה, הוא יתפזר.<br>אני בכיוון הנכון!<br>כל צעד שאני עושה יחד עם אהבה עצמית<br>מקדם אותי ומקצר את הדרך אל היעד."
+    img: "assets/card-bria.jpg",
+    alt: "קלף ובו הכיתוב: אני בריאה ונהיית יותר ויותר בריאה מדי יום. אני אוהבת את הגוף החזק והבריא שלי, אוהבת את איך שאני נראית, מקבלת אותי באהבה ללא תנאי. אני מחזקת את תהליך ההתפתחות וההבראה של הגוף שלי על ידי אהבה."
   },
   {
-    title: "אני סולחת לעבר באהבה ומשתחררת",
-    text: "אני בוחרת לא להחזיק בתוכי<br>רגשות שלא מיטיבים איתי.<br>אני מחבקת את העבר באהבה וסולחת.<br>הבחירה לסלוח מביאה ריפוי לחיים שלי."
-  },
-  {
-    title: "אני בריאה ונהיית יותר ויותר בריאה מדי יום",
-    text: "אני אוהבת את הגוף החזק והבריא שלי,<br>מקבלת אותי באהבה ללא תנאי.<br>אני מחזקת את תהליך ההבראה<br>של הגוף שלי על ידי אהבה."
-  },
-  {
-    title: "אני מלאת סיפוק ושמחה בעשייה שלי",
-    text: "העשייה שלי ממלאת אותי במשמעות,<br>בהתרגשות ובאהבה.<br>אני נהנית מהדרך, מהיצירה<br>ומההשפעה שלי על העולם."
+    img: "assets/card-derech.jpg",
+    alt: "קלף ובו הכיתוב: אני בדרך הנכונה. גם אם לעיתים מרגיש שערפל כבד מסתיר את שדה הראיה, הוא יתפזר. אני בכיוון הנכון! כל צעד שאני עושה יחד עם אהבה עצמית מקדם אותי ומקצר את הדרך אל היעד."
   }
 ];
 
-const card      = document.getElementById("card");
-const cardTitle = document.getElementById("card-title");
-const cardText  = document.getElementById("card-text");
-const drawBtn   = document.getElementById("draw");
+const card    = document.getElementById("card");
+const cardImg = document.getElementById("card-img");
+const drawBtn = document.getElementById("draw");
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 let current = 0;
 
+/* טוענים מראש את שאר הקלפים, כדי שהמעבר ביניהם יהיה מיידי */
+CARDS.forEach(c => { const pre = new Image(); pre.src = c.img; });
+
 function drawCard() {
   // תמיד קלף אחר מזה שמוצג כרגע
   let next = current;
-  while (next === current) next = Math.floor(Math.random() * PHRASES.length);
+  while (next === current) next = Math.floor(Math.random() * CARDS.length);
   current = next;
 
   const render = () => {
-    cardTitle.textContent = PHRASES[current].title;
-    cardText.innerHTML    = PHRASES[current].text;
+    cardImg.src = CARDS[current].img;
+    cardImg.alt = CARDS[current].alt;
     card.classList.remove("is-turning");
   };
 
   if (reduceMotion) { render(); return; }
 
   card.classList.add("is-turning");
-  setTimeout(render, 220);
+  setTimeout(render, 200);
 }
 
 if (drawBtn) drawBtn.addEventListener("click", drawCard);
