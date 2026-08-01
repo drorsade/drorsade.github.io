@@ -502,3 +502,18 @@ p:last-child { margin-bottom: 0; }
   padding: .75rem 1rem;
   font-size: .95rem;
 }
+
+/* ── Footer contact icons ───────────────────────────────────── */
+
+.footer__links a,
+.footer__links li {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+}
+
+.icon {
+  width: 1.15em;
+  height: 1.15em;
+  flex: none;
+}
