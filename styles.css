@@ -421,6 +421,8 @@ p:last-child { margin-bottom: 0; }
   justify-content: space-between;
   gap: 1rem;
   padding: .7rem 1.25rem;
+  /* clear the iPhone home indicator */
+  padding-block-end: calc(.7rem + env(safe-area-inset-bottom, 0px));
   background: var(--cream);
   border-block-start: 1px solid var(--ink-15);
   box-shadow: 0 -6px 20px -12px rgba(88, 79, 76, .5);
@@ -434,6 +436,15 @@ p:last-child { margin-bottom: 0; }
 .btn-buy--sm { padding: .6rem 1.6rem; font-size: .95rem; }
 
 @media (min-width: 48rem) { .sticky-buy { display: none; } }
+
+/* The buy bar is fixed over the bottom of the page, so on mobile the footer
+   has to reserve room for it — otherwise it sits on top of the תקנון,
+   privacy and accessibility links, which are the ones people need most. */
+@media (max-width: 47.99rem) {
+  .footer {
+    padding-block-end: calc(2.5rem + 4.75rem + env(safe-area-inset-bottom, 0px));
+  }
+}
 
 /* ── Scroll reveal ──────────────────────────────────────────── */
 
