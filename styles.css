@@ -513,7 +513,13 @@ p:last-child { margin-bottom: 0; }
 }
 
 .icon {
-  width: 1.15em;
-  height: 1.15em;
+  width: .92em;
+  height: .92em;
   flex: none;
+}
+
+/* a solid glyph reads heavier than an outlined one at the same box size */
+.icon--solid {
+  width: .84em;
+  height: .84em;
 }
