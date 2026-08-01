@@ -71,7 +71,6 @@ Settings → Pages → Source: `main` / `/ (root)`. Pushing to `main` publishes.
 
 - [ ] Paste the Morning payment URL into `script.js`
 - [ ] Fill in the עוסק number and returns address in `takanon.html` (marked `[להשלמה]`)
-- [ ] Confirm the שליח delivery cost in the FAQ in `index.html`
 - [ ] Have a lawyer glance at `takanon.html` / `privacy.html` — they're solid templates,
       not legal advice
 - [ ] Update `og:url` / `canonical` in `index.html` to the real domain
