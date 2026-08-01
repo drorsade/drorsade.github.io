@@ -106,7 +106,7 @@ placeholders remain.
       that returns 404. Harmless offline, but they must be corrected before
       republishing or sharing any link.
 - [ ] Custom domain — deferred. Needs A/AAAA records for the apex plus a `www`
-      CNAME to `netisade.github.io`, then `canonical` / `og:url` / `og:image` updated.
+      CNAME to `drorsade.github.io`, then `canonical` / `og:url` / `og:image` updated.
 
 ### Verification not yet done
 
