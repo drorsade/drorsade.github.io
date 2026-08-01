@@ -512,6 +512,10 @@ p:last-child { margin-bottom: 0; }
   gap: .45rem;
 }
 
+/* האייקון יושב משמאל לטקסט. הסדר ב-HTML נשאר כשהיה (אייקון ואז טקסט),
+   כך שקוראי מסך לא מושפעים — רק סדר התצוגה מתהפך. */
+.footer__links a { flex-direction: row-reverse; }
+
 .icon {
   width: .92em;
   height: .92em;
