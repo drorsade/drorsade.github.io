@@ -319,8 +319,9 @@ p:last-child { margin-bottom: 0; }
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(2, 1fr);
+  max-width: 44rem;
+  margin-inline: auto;
 }
-@media (min-width: 48rem) { .gallery { grid-template-columns: repeat(4, 1fr); } }
 
 .gallery img {
   width: 100%;
@@ -384,8 +385,9 @@ p:last-child { margin-bottom: 0; }
 .footer__inner { text-align: center; }
 
 .footer__name {
-  font-family: var(--display);
+  font-family: var(--body);
   font-size: 1.35rem;
+  font-weight: 600;
   margin-block-end: 1.25rem;
 }
 
