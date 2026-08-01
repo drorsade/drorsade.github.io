@@ -74,8 +74,12 @@ Settings → Pages → Source: `main` / `/ (root)`. Pushing to `main` publishes.
 - [ ] **Morning payment URL** → `MORNING_URL` in `script.js` (currently `""`).
       Until it's set, every buy button opens a pre-filled WhatsApp order and payment
       is handled manually.
-- [ ] **מספר עוסק** → `takanon.html`, section 1 (marked `[להשלמה]`)
 - [ ] **Returns address** → `takanon.html`, section 6 (marked `[להשלמה]`)
+
+`מספר עוסק` is filled in: **301107819, עוסק פטור**. Because she is an עוסק פטור,
+the site must say **קבלה** rather than חשבונית מס, and must not claim the price
+includes מע״מ — both are corrected throughout. Revisit if she ever becomes an
+עוסק מורשה.
 
 ### Legal
 
