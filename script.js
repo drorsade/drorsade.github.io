@@ -89,8 +89,15 @@ if (videoBox) {
     video.poster      = videoBox.dataset.poster;
     video.controls    = true;
     video.playsInline = true;
-    video.autoplay    = true;
+    video.preload     = "auto";
     videoBox.replaceChildren(video);
+
+    // הלחיצה עצמה מתירה ניגון עם קול. אם הדפדפן בכל זאת חוסם —
+    // מנגנים בהשתקה, וכך הסרטון תמיד מתחיל.
+    video.play().catch(() => {
+      video.muted = true;
+      video.play().catch(() => {});
+    });
   });
 }
 

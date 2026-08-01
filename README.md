@@ -51,6 +51,15 @@ down from 35 MB). If you add new photos, resize them first — a raw phone photo
 sips -Z 1600 -s format jpeg -s formatOptions 80 IMG_1234.JPG --out assets/new-photo.jpg
 ```
 
+For video, **always pass `-pix_fmt yuv420p`**. Homebrew's ffmpeg is built against a 10-bit
+x264, and its default output is H.264 High 10 — which no browser can decode. It encodes and
+plays fine locally, then silently fails on the web:
+
+```bash
+ffmpeg -i clip.MP4 -vf "scale=-2:720" -c:v libx264 -profile:v high -pix_fmt yuv420p \
+  -crf 28 -movflags +faststart -c:a aac -b:a 96k assets/new-video.mp4
+```
+
 ## Deploying
 
 Hosted on GitHub Pages from the `main` branch, root folder.
