@@ -9,11 +9,11 @@
    הפרטיות (privacy.html), שמצהיר כרגע שאין באתר כלי מדידה.
    ============================================================ */
 
-const CF_ANALYTICS_TOKEN = "";
+const CF_ANALYTICS_TOKEN = "cfc6086c73844d829ab3107796a1db96";
 
 if (CF_ANALYTICS_TOKEN) {
   const beacon = document.createElement("script");
-  beacon.defer = true;
+  beacon.type = "module";   // beacon.min.js is an ES module, as in Cloudflare's own snippet
   beacon.src = "https://static.cloudflareinsights.com/beacon.min.js";
   beacon.setAttribute("data-cf-beacon", JSON.stringify({ token: CF_ANALYTICS_TOKEN }));
   document.head.appendChild(beacon);
