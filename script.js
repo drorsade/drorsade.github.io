@@ -44,32 +44,44 @@ const CARDS = [
   }
 ];
 
-const card    = document.getElementById("card");
-const cardImg = document.getElementById("card-img");
 const drawBtn = document.getElementById("draw");
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-let current = 0;
 
-/* טוענים מראש את שאר הקלפים, כדי שהמעבר ביניהם יהיה מיידי */
+let front = document.getElementById("card-a");   // הקלף שמוצג כרגע
+let back  = document.getElementById("card-b");   // השכבה שמתחתיו, שאליה נטען הבא
+
+let current = 0;
+let busy    = false;
+
+/* טוענים מראש את כל הקלפים, כדי שהמעבר ביניהם יהיה מיידי וללא הבהוב */
 CARDS.forEach(c => { const pre = new Image(); pre.src = c.img; });
 
-function drawCard() {
+async function drawCard() {
+  if (busy) return;               // התעלמות מלחיצות בזמן המעבר
+  busy = true;
+
   // תמיד קלף אחר מזה שמוצג כרגע
   let next = current;
   while (next === current) next = Math.floor(Math.random() * CARDS.length);
   current = next;
 
-  const render = () => {
-    cardImg.src = CARDS[current].img;
-    cardImg.alt = CARDS[current].alt;
-    card.classList.remove("is-turning");
-  };
+  back.src = CARDS[current].img;
+  back.alt = CARDS[current].alt;
 
-  if (reduceMotion) { render(); return; }
+  // מחכים שהתמונה תהיה מפוענחת ומוכנה לציור לפני שמתחילים את המעבר,
+  // אחרת נראה רגע של ריק במקום הקלף
+  try { await back.decode(); } catch { /* אם הפענוח נכשל, ממשיכים בכל זאת */ }
 
-  card.classList.add("is-turning");
-  setTimeout(render, 200);
+  front.alt = "";
+  front.setAttribute("aria-hidden", "true");
+  back.removeAttribute("aria-hidden");
+
+  back.classList.add("is-active");
+  front.classList.remove("is-active");
+
+  [front, back] = [back, front];  // מחליפים תפקידים
+  busy = false;
 }
 
 if (drawBtn) drawBtn.addEventListener("click", drawCard);
