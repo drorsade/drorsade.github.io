@@ -60,6 +60,17 @@ ffmpeg -i clip.MP4 -vf "scale=-2:720" -c:v libx264 -profile:v high -pix_fmt yuv4
   -crf 28 -movflags +faststart -c:a aac -b:a 96k assets/new-video.mp4
 ```
 
+## Thank-you page
+
+`thankyou/index.html` is where Grow sends the customer after a successful payment
+(`https://drorsade.github.io/thankyou`). It is a directory with an `index.html`
+rather than `thankyou.html`, so the URL resolves with or without a trailing slash.
+
+It is `noindex` — a confirmation page should never appear in search results — and
+it loads `analytics.js`, which makes it a **conversion counter**: a pageview on
+`/thankyou` is a completed purchase. That is the one number Cloudflare Web
+Analytics cannot otherwise give you, since it has no custom events.
+
 ## Analytics
 
 GitHub Pages provides **no** analytics. (The repo's Insights → Traffic tab counts

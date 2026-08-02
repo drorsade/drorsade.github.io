@@ -10,7 +10,7 @@
 
    כל עוד הוא ריק, הכפתורים מובילים להזמנה בוואטסאפ.
    ------------------------------------------------------------ */
-const MORNING_URL = "";
+const MORNING_URL = "https://mrng.to/MHtizi79HV";
 
 if (MORNING_URL) {
   document.querySelectorAll("[data-buy]").forEach(el => { el.href = MORNING_URL; });

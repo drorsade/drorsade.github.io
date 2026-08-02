@@ -510,3 +510,69 @@ p:last-child { margin-bottom: 0; }
   width: .84em;
   height: .84em;
 }
+
+/* ── Thank-you page ─────────────────────────────────────────── */
+
+.thanks {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: clamp(3rem, 10vw, 6rem) 4rem;
+}
+
+.thanks__inner { position: relative; z-index: 1; }
+
+.thanks__title {
+  font-size: clamp(1.9rem, 1.4rem + 2.6vw, 3.1rem);
+  margin-block-end: 1rem;
+}
+
+.thanks__lede {
+  color: var(--ink-70);
+  margin-block-end: clamp(2rem, 5vw, 2.75rem);
+}
+
+.thanks__steps {
+  list-style: none;
+  margin: 0 auto clamp(2rem, 5vw, 2.75rem);
+  padding: 0;
+  max-width: 26rem;
+  text-align: start;
+}
+.thanks__steps li {
+  padding-block: .85rem;
+  border-block-end: 1px solid var(--ink-15);
+}
+.thanks__steps li:last-child { border-block-end: 0; }
+
+.thanks__wish {
+  font-family: var(--display);
+  font-size: 1.15rem;
+  color: var(--ink-70);
+  margin-block-end: 2rem;
+}
+
+.thanks__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.thanks__home {
+  font-size: .95rem;
+  color: var(--ink-45);
+}
+
+.thanks__wire, .thanks__birds {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 1.5rem;
+  width: 100%;
+  height: 40px;
+  color: var(--ink-45);
+}
+.thanks__birds { fill: var(--ink); opacity: .55; }
