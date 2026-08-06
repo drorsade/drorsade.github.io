@@ -25,10 +25,16 @@ if (MORNING_URL) {
    ה-alt הוא לא קישוט: הוא מה שקורא מסך מקריא, ומה שמופיע אם
    התמונה לא נטענת. לכן הוא מכיל את הנוסח המלא של הקלף.
    ------------------------------------------------------------ */
+/* CARDS[0] must match the card hard-coded in index.html, since `current`
+   starts at 0 — otherwise the first draw can repeat the visible card. */
 const CARDS = [
   {
-    img: "assets/card-tov-matok.jpg",
-    alt: "קלף ובו הכיתוב: רק טוב מתוק מונח לפניי. ההווה והעתיד שלי מלאים ברכה ושפע. הכל מתכנס לטובתי העליונה ולהגשמת כל חלומותיי ורצונותיי בדרכים מושלמות."
+    img: "assets/card-derech.jpg",
+    alt: "קלף ובו הכיתוב: אני בדרך הנכונה. גם אם לעיתים מרגיש שערפל כבד מסתיר את שדה הראיה, הוא יתפזר. אני בכיוון הנכון! כל צעד שאני עושה יחד עם אהבה עצמית מקדם אותי ומקצר את הדרך אל היעד."
+  },
+  {
+    img: "assets/card-maarich.jpg",
+    alt: "קלף ובו הכיתוב: אני מעריכה אותי. יש לי ערך, אני שווה, אני רלוונטית, אני נשמעת, אני חשובה."
   },
   {
     img: "assets/card-chaim-ohavim.jpg",
@@ -37,10 +43,6 @@ const CARDS = [
   {
     img: "assets/card-bria.jpg",
     alt: "קלף ובו הכיתוב: אני בריאה ונהיית יותר ויותר בריאה מדי יום. אני אוהבת את הגוף החזק והבריא שלי, אוהבת את איך שאני נראית, מקבלת אותי באהבה ללא תנאי. אני מחזקת את תהליך ההתפתחות וההבראה של הגוף שלי על ידי אהבה."
-  },
-  {
-    img: "assets/card-derech.jpg",
-    alt: "קלף ובו הכיתוב: אני בדרך הנכונה. גם אם לעיתים מרגיש שערפל כבד מסתיר את שדה הראיה, הוא יתפזר. אני בכיוון הנכון! כל צעד שאני עושה יחד עם אהבה עצמית מקדם אותי ומקצר את הדרך אל היעד."
   }
 ];
 
@@ -83,31 +85,47 @@ if (cardEl && baseImg) {
 /* טוענים מראש את כל הקלפים, כדי שהמעבר ביניהם יהיה מיידי וללא הבהוב */
 CARDS.forEach(c => { const pre = new Image(); pre.src = c.img; });
 
+/* מוודא שהתמונה נטענה לפני שמתחילים את המעבר, כדי שלא ייראה רגע ריק.
+   בכוונה משתמשים כאן ב-onload ולא ב-decode(): decode() לא בהכרח מסתיים
+   בכרום כשהתמונה אינה מוצגת על המסך, וזה תקע את הכפתור לגמרי.
+   כל הקלפים נטענים מראש בעליית העמוד, ולכן בפועל אין כאן שום המתנה. */
+function preloadCard(src) {
+  const pre = new Image();
+  pre.src = src;
+  if (pre.complete) return Promise.resolve();   // כבר במטמון
+
+  return new Promise(resolve => {
+    pre.onload = pre.onerror = resolve;
+    setTimeout(resolve, 800);                   // רשת אחרונה, שלא ייתקע
+  });
+}
+
 async function drawCard() {
   if (busy) return;               // התעלמות מלחיצות בזמן המעבר
   busy = true;
 
-  // תמיד קלף אחר מזה שמוצג כרגע
-  let next = current;
-  while (next === current) next = Math.floor(Math.random() * CARDS.length);
-  current = next;
+  try {
+    // תמיד קלף אחר מזה שמוצג כרגע
+    let next = current;
+    while (next === current) next = Math.floor(Math.random() * CARDS.length);
+    current = next;
 
-  back.src = CARDS[current].img;
-  back.alt = CARDS[current].alt;
+    await preloadCard(CARDS[current].img);
 
-  // מחכים שהתמונה תהיה מפוענחת ומוכנה לציור לפני שמתחילים את המעבר,
-  // אחרת נראה רגע של ריק במקום הקלף
-  try { await back.decode(); } catch { /* אם הפענוח נכשל, ממשיכים בכל זאת */ }
+    back.src = CARDS[current].img;
+    back.alt = CARDS[current].alt;
 
-  front.alt = "";
-  front.setAttribute("aria-hidden", "true");
-  back.removeAttribute("aria-hidden");
+    front.alt = "";
+    front.setAttribute("aria-hidden", "true");
+    back.removeAttribute("aria-hidden");
 
-  back.style.opacity  = "1";
-  front.style.opacity = "0";
+    back.style.opacity  = "1";
+    front.style.opacity = "0";
 
-  [front, back] = [back, front];  // מחליפים תפקידים
-  busy = false;
+    [front, back] = [back, front];  // מחליפים תפקידים
+  } finally {
+    busy = false;                   // תמיד משתחרר, גם אם משהו נכשל באמצע
+  }
 }
 
 if (drawBtn) drawBtn.addEventListener("click", drawCard);
